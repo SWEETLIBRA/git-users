@@ -5,7 +5,9 @@ import { useSerchUsersQuery } from "../store/github/github.api";
 export function HomePage() {
     const [search, setSearch ] = useState('')
     const debounced = useDebounce(search)
-    const {isLoading, isError, data} = useSerchUsersQuery('aigor')
+    const {isLoading, isError, data} = useSerchUsersQuery(debounced, {
+        skip: debounced.length < 3
+    })
 
     useEffect(() => {
         console.log(debounced);
@@ -22,9 +24,9 @@ export function HomePage() {
                     onChange={e => setSearch(e.target.value)}
                 />
 
-                <div className="absolute top-[42px] left-0 right-0 max-h-[200px] shadow-md bg-white">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, qui.
-                </div>
+                <ul className="list-none absolute top-[42px] left-0 right-0 max-h-[200px] shadow-md bg-white">
+                    {isLoading && <p className="text-center">Loading...</p>}
+                </ul>
             </div>
         </div>
     )
