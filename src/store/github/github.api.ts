@@ -15,4 +15,4 @@ export const githubApi = createApi({
     })
 })
 
-const {useSerchUsersQuery} = githubApi
+export const {useSerchUsersQuery} = githubApi
