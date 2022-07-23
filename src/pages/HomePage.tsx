@@ -24,8 +24,13 @@ export function HomePage() {
                     onChange={e => setSearch(e.target.value)}
                 />
 
-                <ul className="list-none absolute top-[42px] left-0 right-0 max-h-[200px] shadow-md bg-white">
+                <ul className="list-none absolute top-[42px] left-0 right-0 max-h-[200px] overflow-y-scroll shadow-md bg-white">
                     {isLoading && <p className="text-center">Loading...</p>}
+                    { data?.map(user =>(
+                        <li key={user.id}
+                        className="py-2 px-4 hover:bg-gray-500 hover:text-white transition-colors cursor-pointer"
+                        >{ user.login }</li>
+                    )) }
                 </ul>
             </div>
         </div>
