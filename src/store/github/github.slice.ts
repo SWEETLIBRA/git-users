@@ -7,7 +7,7 @@ interface GithubState {
 }
 
 const initialState: GithubState = {
-    favourites: []
+    favourites: JSON.parse(localStorage.getItem(LS_FAV_KEY) ?? '[]')
 }
 
 export const githubSlice = createSlice({
