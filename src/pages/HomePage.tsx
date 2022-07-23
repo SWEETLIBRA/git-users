@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDebounce } from "../hooks/debounce";
-import { useSerchUsersQuery } from "../store/github/github.api";
+import { useSerchUsersQuery, useLazyGetUserReposQuery } from "../store/github/github.api";
 
 export function HomePage() {
     const [search, setSearch ] = useState('')
@@ -10,13 +10,14 @@ export function HomePage() {
         skip: debounced.length < 3,
         refetchOnFocus: true
     })
+    const [fetchRepos, {isLoading: areReposLoading, data: repos}] = useLazyGetUserReposQuery()
 
     useEffect(() => {
         setDropdown(debounced.length > 3 && data?.length! > 0 )
     }, [debounced, data])
 
     const clickHandler = (username: string) => {
-        console.log(username);
+        fetchRepos(username);
         
     }
     
@@ -40,6 +41,9 @@ export function HomePage() {
                         >{ user.login }</li>
                     )) }
                 </ul>}
+                <div className="container">
+                    { areReposLoading && <p className="text-center">Repos are loading...</p>}                
+                </div>
             </div>
         </div>
     )
