@@ -14,6 +14,11 @@ export function HomePage() {
     useEffect(() => {
         setDropdown(debounced.length > 3 && data?.length! > 0 )
     }, [debounced, data])
+
+    const clickHandler = (username: string) => {
+        console.log(username);
+        
+    }
     
     return(
         <div className="flex justify-center pt-10 mx-auto h-screen w-screen">
@@ -30,6 +35,7 @@ export function HomePage() {
                     {isLoading && <p className="text-center">Loading...</p>}
                     { data?.map(user =>(
                         <li key={user.id}
+                        onClick={() => clickHandler(user.login)}
                         className="py-2 px-4 hover:bg-gray-500 hover:text-white transition-colors cursor-pointer"
                         >{ user.login }</li>
                     )) }
