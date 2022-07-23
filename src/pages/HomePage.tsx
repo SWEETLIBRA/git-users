@@ -7,7 +7,8 @@ export function HomePage() {
     const [dropdown, setDropdown] = useState(false)
     const debounced = useDebounce(search)
     const {isLoading, isError, data} = useSerchUsersQuery(debounced, {
-        skip: debounced.length < 3
+        skip: debounced.length < 3,
+        refetchOnFocus: true
     })
 
     useEffect(() => {
