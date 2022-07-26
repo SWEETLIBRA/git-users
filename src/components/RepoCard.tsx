@@ -4,11 +4,16 @@ import { IRepo } from '../models/models'
 
 export function RepoCard({repo}: {repo: IRepo}) {
 
-  const {addFavorite} = useActions()
+  const {addFavorite, removeFavorite} = useActions()
 
   const addToFavourite = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
     addFavorite(repo.html_url)
+  }
+
+  const deleteFromFavourite = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+    removeFavorite(repo.html_url)
   }
   
     return (
@@ -21,9 +26,14 @@ export function RepoCard({repo}: {repo: IRepo}) {
             </p>
             <p className='text-sm font-thin'>{repo?.description}</p>
             <button 
-              className='py-2 px-4 bg-yellow-400 rounded hover:shadow-md transition-all'
+              className='py-2 px-4 bg-yellow-400 mr-2 rounded hover:shadow-md transition-all'
               onClick={addToFavourite}
             >Add</button>
+
+            <button 
+              className='py-2 px-4 bg-red-400 rounded hover:shadow-md transition-all'
+              onClick={deleteFromFavourite}
+            >Delete</button>
 
         </a>
       </div>
