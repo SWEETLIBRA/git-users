@@ -1,19 +1,25 @@
 import React from 'react'
+import { useState } from 'react'
 import { useActions } from '../hooks/actions'
+import { useAppSelector } from '../hooks/redux'
 import { IRepo } from '../models/models'
 
 export function RepoCard({repo}: {repo: IRepo}) {
 
   const {addFavorite, removeFavorite} = useActions()
+  const {favourites} = useAppSelector(state => state.github)
+  const [isFav, setIsFav] = useState(favourites.includes(repo.html_url))
 
   const addToFavourite = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
     addFavorite(repo.html_url)
+    setIsFav(true)
   }
 
   const deleteFromFavourite = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
     removeFavorite(repo.html_url)
+    setIsFav(false)
   }
   
     return (
@@ -25,15 +31,15 @@ export function RepoCard({repo}: {repo: IRepo}) {
                 Watchers: <span className='font bold'>{repo.watchers}</span>
             </p>
             <p className='text-sm font-thin'>{repo?.description}</p>
-            <button 
+            {!isFav && <button 
               className='py-2 px-4 bg-yellow-400 mr-2 rounded hover:shadow-md transition-all'
               onClick={addToFavourite}
-            >Add</button>
+            >Add</button>}
 
-            <button 
+            {isFav && <button 
               className='py-2 px-4 bg-red-400 rounded hover:shadow-md transition-all'
               onClick={deleteFromFavourite}
-            >Delete</button>
+            >Delete</button>}
 
         </a>
       </div>
