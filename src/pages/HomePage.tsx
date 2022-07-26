@@ -4,7 +4,7 @@ import { useDebounce } from "../hooks/debounce";
 import { useSerchUsersQuery, useLazyGetUserReposQuery } from "../store/github/github.api";
 
 export function HomePage() {
-    const [search, setSearch ] = useState('')
+    const [search, setSearch ] = useState('SWEETLIBRA')
     const [dropdown, setDropdown] = useState(false)
     const debounced = useDebounce(search)
     const {isLoading, isError, data} = useSerchUsersQuery(debounced, {
